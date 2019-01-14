@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidGBExtHomework</string>
+    <string name="button_counter">Количество = 0</string>
+    <string name="tv_counter3">Счетчик 3</string>
+    <string name="tv_counter2">Счетчик 2</string>
+    <string name="tv_counter1">Счетчик 1</string>
 </resources>
