@@ -12,6 +12,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.alohagoha.androidgbexthomework.R;
+import com.example.alohagoha.androidgbexthomework.mvp.model.cache.RoomImageCache;
 import com.example.alohagoha.androidgbexthomework.mvp.model.image.IImageLoader;
 import com.example.alohagoha.androidgbexthomework.mvp.presenter.Presenter;
 import com.example.alohagoha.androidgbexthomework.mvp.view.IMainView;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends MvpAppCompatActivity implements IMainView {
-    private final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
+    private final IImageLoader<ImageView> imageLoader = new GlideImageLoader(new RoomImageCache());
     @InjectPresenter
     Presenter presenter;
     RepositoryAdapter adapter;

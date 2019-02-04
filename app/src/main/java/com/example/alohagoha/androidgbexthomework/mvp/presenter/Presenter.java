@@ -64,7 +64,6 @@ public class Presenter extends MvpPresenter<IMainView> {
                 .getRepos(user)
                 .observeOn(scheduler)
                 .subscribe(repositoryDTO -> {
-
                             listPresenter.repos = repositoryDTO;
                             getViewState().updateRecyclerView();
                         },

@@ -5,12 +5,14 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.RoomImage;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.RoomRepository;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.RoomUser;
+import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.dao.ImageDao;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.dao.RepositoryDao;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.dao.UserDao;
 
-@Database(entities = {RoomUser.class, RoomRepository.class}, version = 1)
+@Database(entities = {RoomUser.class, RoomRepository.class, RoomImage.class}, version = 2)
 public abstract class UserDatabase extends RoomDatabase {
 
     private final static String DB_NAME = "userdatabase.db";
@@ -32,4 +34,6 @@ public abstract class UserDatabase extends RoomDatabase {
     public abstract UserDao getUserDao();
 
     public abstract RepositoryDao getRepositoryDao();
+
+    public abstract ImageDao getImageDao();
 }
