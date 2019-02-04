@@ -3,8 +3,8 @@ package com.example.alohagoha.androidgbexthomework.mvp.model.cache;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.example.alohagoha.androidgbexthomework.mvp.model.entity.OwnerDTO;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.RepositoryDTO;
-import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.OwnerDTO;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.RoomRepository;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.RoomUser;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.room.db.UserDatabase;
