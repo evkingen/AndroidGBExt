@@ -60,5 +60,8 @@ dependencies {
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$room_version"
 
+    //dagger
+    implementation 'com.google.dagger:dagger:2.21'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
 }
 
