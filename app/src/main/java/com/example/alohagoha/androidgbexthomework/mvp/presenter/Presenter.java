@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.alohagoha.androidgbexthomework.mvp.model.cache.RoomRepositoriesCache;
-import com.example.alohagoha.androidgbexthomework.mvp.model.cache.RoomUserCache;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.RepositoryDTO;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.UserDTO;
 import com.example.alohagoha.androidgbexthomework.mvp.model.repo.RepositoriesRepo;
@@ -17,21 +15,23 @@ import com.example.alohagoha.androidgbexthomework.mvp.view.RepositoryItem.IRepos
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import timber.log.Timber;
 
 @InjectViewState
 public class Presenter extends MvpPresenter<IMainView> {
     Scheduler scheduler;
+    @Inject
     UsersRepo usersRepo;
+    @Inject
     RepositoriesRepo repositoriesRepo;
     UserDTO user;
     private RepositoryListPresenter listPresenter;
 
     public Presenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        usersRepo = new UsersRepo(new RoomUserCache());
-        repositoriesRepo = new RepositoriesRepo(new RoomRepositoriesCache());
         listPresenter = new RepositoryListPresenter();
     }
 
@@ -40,13 +40,13 @@ public class Presenter extends MvpPresenter<IMainView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().initRecyclerView();
-        loadInfo();
+        loadInfo("googlesamples");
     }
 
     @SuppressLint("CheckResult")
-    private void loadInfo() {
+    private void loadInfo(String username) {
         usersRepo
-                .getUser("googlesamples")
+                .getUser(username)
                 .observeOn(scheduler)
                 .subscribe(userDTO -> {
                             this.user = userDTO;
