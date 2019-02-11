@@ -10,16 +10,27 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RoomImageCache implements ICache<RoomImage> {
 
+    private UserDatabase db;
+
+    public RoomImageCache(UserDatabase db) {
+        this.db = db;
+    }
+
     @Override
     public void write(RoomImage data) {
-        Disposable disposable = Completable.fromAction(() ->
-                UserDatabase.getInstance().getImageDao().insert(data)).subscribeOn(Schedulers.io()).subscribe();
+        Disposable disposable = Completable.fromAction(() -> db
+                .getImageDao()
+                .insert(data))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override
     public Single<RoomImage> read(String url) {
         return Single.create(emitter -> {
-            RoomImage roomImage = UserDatabase.getInstance().getImageDao().getImageByUrl(url);
+            RoomImage roomImage = db
+                    .getImageDao()
+                    .getImageByUrl(url);
             if (roomImage == null) {
                 emitter.onError(new RuntimeException("Not found image!"));
             } else {

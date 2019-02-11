@@ -11,6 +11,12 @@ import io.reactivex.Single;
 
 public class RoomUserCache implements ICache<UserDTO> {
 
+    private UserDatabase database;
+
+    public RoomUserCache(UserDatabase database) {
+        this.database = database;
+    }
+
     @Override
     public void write(final @Nullable UserDTO user) {
         RoomUser roomUser = getUserFromDB(user.getLogin());
@@ -21,7 +27,9 @@ public class RoomUserCache implements ICache<UserDTO> {
 
         roomUser.setAvatarUrl(user.getAvatarUrl());
         roomUser.setReposUrl(user.getReposUrl());
-        UserDatabase.getInstance().getUserDao().insert(roomUser);
+        database
+                .getUserDao()
+                .insert(roomUser);
     }
 
     @Override
@@ -44,7 +52,7 @@ public class RoomUserCache implements ICache<UserDTO> {
 
     @Nullable
     private RoomUser getUserFromDB(final @NonNull String username) {
-        return UserDatabase.getInstance()
+        return database
                 .getUserDao()
                 .getUserByLogin(username);
     }

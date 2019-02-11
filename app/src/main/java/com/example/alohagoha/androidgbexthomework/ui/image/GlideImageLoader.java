@@ -25,10 +25,11 @@ import timber.log.Timber;
 public class GlideImageLoader implements IImageLoader<ImageView> {
 
     private static final String IMAGE_DIR = "image";
-
+    private App app;
     private ICache<RoomImage> imageCache;
 
-    public GlideImageLoader(ICache<RoomImage> imageCache) {
+    public GlideImageLoader(App app, ICache<RoomImage> imageCache) {
+        this.app = app;
         this.imageCache = imageCache;
     }
 
@@ -48,7 +49,7 @@ public class GlideImageLoader implements IImageLoader<ImageView> {
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    File imageDir = new File(App.getInstance().getExternalFilesDir(null) + "/" + IMAGE_DIR);
+                    File imageDir = new File(app.getExternalFilesDir(null) + "/" + IMAGE_DIR);
 
                     if (!imageDir.exists() && !imageDir.mkdirs()) {
                         throw new RuntimeException("Failed to create directory: " + imageDir.toString());

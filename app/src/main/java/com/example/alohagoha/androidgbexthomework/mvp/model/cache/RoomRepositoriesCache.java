@@ -16,6 +16,12 @@ import io.reactivex.Single;
 
 public class RoomRepositoriesCache implements ICache<List<RepositoryDTO>> {
 
+    private UserDatabase db;
+
+    public RoomRepositoriesCache(UserDatabase db) {
+        this.db = db;
+    }
+
     @Override
     public void write(List<RepositoryDTO> repositoryDTOS) {
         List<RoomRepository> roomRepositories = new ArrayList<>();
@@ -28,7 +34,7 @@ public class RoomRepositoriesCache implements ICache<List<RepositoryDTO>> {
                     )
             );
         }
-        UserDatabase.getInstance()
+        db
                 .getRepositoryDao()
                 .insert(roomRepositories);
     }
@@ -40,7 +46,7 @@ public class RoomRepositoriesCache implements ICache<List<RepositoryDTO>> {
             if (roomUser == null) {
                 emitter.onError(new RuntimeException("User not found in cache!"));
             }
-            List<RoomRepository> roomRepositories = UserDatabase.getInstance()
+            List<RoomRepository> roomRepositories = db
                     .getRepositoryDao()
                     .findAllByUserLogin(username);
             List<RepositoryDTO> repos = new ArrayList<>();
@@ -58,7 +64,7 @@ public class RoomRepositoriesCache implements ICache<List<RepositoryDTO>> {
 
     @Nullable
     private RoomUser getUserFromDB(final @NonNull String username) {
-        return UserDatabase.getInstance()
+        return db
                 .getUserDao()
                 .getUserByLogin(username);
     }
