@@ -3,7 +3,7 @@ package com.example.alohagoha.androidgbexthomework.mvp.model.repo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.alohagoha.androidgbexthomework.mvp.model.api.ApiHolder;
+import com.example.alohagoha.androidgbexthomework.mvp.model.api.IDataSource;
 import com.example.alohagoha.androidgbexthomework.mvp.model.cache.ICache;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.RepositoryDTO;
 import com.example.alohagoha.androidgbexthomework.mvp.model.entity.UserDTO;
@@ -17,9 +17,11 @@ import io.reactivex.schedulers.Schedulers;
 public class RepositoriesRepo {
 
     private ICache<List<RepositoryDTO>> cache;
+    private IDataSource api;
 
-    public RepositoriesRepo(ICache cache) {
+    public RepositoriesRepo(ICache cache, IDataSource api) {
         this.cache = cache;
+        this.api = api;
     }
 
     @NonNull
@@ -36,7 +38,7 @@ public class RepositoriesRepo {
 
     @NonNull
     private Single<List<RepositoryDTO>> getReposFromNetwork(final @Nullable UserDTO user) {
-        return ApiHolder.getApi()
+        return api
                 .getRepos(user.getLogin())
                 .doAfterSuccess(repositoryDTOS -> cache.write(repositoryDTOS));
     }
